@@ -1,6 +1,6 @@
 # Life Agents
 
-Переиспользуемые OpenCode-агенты и skills для frontend-разработки.
+Переиспользуемые OpenCode-агенты и skills для разработки в продуктовых и enterprise-проектах.
 
 Версия: `0.1`
 
@@ -9,6 +9,7 @@
 Агенты находятся в `agents/`:
 
 - `frontend-dev-assistant` - основной агент для frontend-задач. Классифицирует задачу, собирает контекст, составляет план до правок, делегирует специализированным агентам, запускает проверки и возвращает отчет.
+- `java-dev-assistant` - основной агент для Java/backend-задач. Работает с русскими запросами, Maven/Gradle, Spring/JVM, REST, JMS IBM MQ/ArtemisMQ, workflow, внутренними библиотеками и Bitbucket source lookup через subagent.
 - `code-navigator` - read-only subagent для навигации по коду. Находит релевантные файлы, точки входа, execution path, связи и похожие реализации.
 - `bitbucket-source-navigator` - read-only subagent для точечного поиска исходников внутренних библиотек и шаблонов через Bitbucket MCP по dependency/package/class/contract/template evidence.
 - `bugfix-investigator` - read-only subagent для расследования багов. Воспроизводит или анализирует симптом, строит гипотезы и предлагает минимальный фикс.
@@ -45,6 +46,14 @@ cp -r skills/* .opencode/skills/
 ```
 
 ## Рекомендуемый Workflow
+
+Для Java/backend-разработки используйте `java-dev-assistant`:
+
+```text
+@java-dev-assistant почини обработку сообщения из очереди статусов
+```
+
+Он работает по тому же безопасному процессу: сначала классифицирует задачу, собирает локальный контекст, при необходимости делегирует точечный поиск исходников внутренних библиотек в `bitbucket-source-navigator`, составляет план и ждет подтверждения перед правками.
 
 Для обычной frontend-разработки используйте `frontend-dev-assistant`:
 
@@ -84,7 +93,7 @@ cp -r skills/* .opencode/skills/
 
 ## Заметки По Версии 0.1
 
-Эта версия ориентирована на frontend TypeScript/Vue/React-проекты, но агенты должны адаптироваться к локальным правилам проекта через discovery репозитория.
+Эта версия начиналась с frontend TypeScript/Vue/React-проектов и расширяется под Java/backend enterprise-разработку. Агенты должны адаптироваться к локальным правилам проекта через discovery репозитория.
 
 Текущие ограничения:
 
