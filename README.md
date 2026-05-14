@@ -15,7 +15,7 @@
 - `bugfix-investigator` - read-only subagent для расследования багов. Воспроизводит или анализирует симптом, строит гипотезы и предлагает минимальный фикс.
 - `test-writer` - subagent для тестов. Находит тестовый стек, выбирает минимально полезную testing seam, пишет behavior tests и запускает только релевантные тесты.
 - `reviewer` - read-only subagent для поиска рисков. Проверяет API breaks, render/state issues, type risks, циклические зависимости, overengineering и отсутствие проверок.
-- `commit-assistant` - основной агент для коммитов по git diff. Группирует изменения, ищет мусор, предлагает commit message и коммитит только после явного подтверждения.
+- `git-assistant` - основной агент для git-операций. Группирует изменения, создает коммиты в формате `TEAMCVSI-${number} Краткое сообщение на русском` и открывает Bitbucket MR через MCP только после явного подтверждения.
 
 Skills находятся в `skills/`:
 
@@ -74,13 +74,13 @@ cp -r skills/* .opencode/skills/
 9. Вызывает `reviewer` перед финальным отчетом.
 10. Возвращает, что изменено, почему и как проверено.
 
-Когда изменения готовы к коммиту, используйте `commit-assistant`:
+Когда изменения готовы к коммиту или MR, используйте `git-assistant`:
 
 ```text
-@commit-assistant подготовь коммит
+@git-assistant подготовь коммит TEAMCVSI-123
 ```
 
-Он использует только git context: `git status`, `git diff`, staged diff и свежий `git log`. Он не делает `git add` и `git commit` без явного подтверждения.
+Он использует только git context: `git status`, `git diff`, staged diff, branch/remote info и `git log`. Он не делает `git add`, `git commit`, `git push` и не создает Bitbucket MR без явного подтверждения. Commit message и MR title всегда должны быть в формате `TEAMCVSI-${number} Краткое сообщение на русском`.
 
 ## Модель Безопасности
 
@@ -88,7 +88,7 @@ cp -r skills/* .opencode/skills/
 - `code-navigator`, `bugfix-investigator` и `reviewer` работают read-only.
 - `bitbucket-source-navigator` работает read-only, использует Bitbucket MCP только при наличии точного evidence и не делает широкий поиск по репозиториям.
 - `test-writer` может менять тесты, но не добавляет зависимости и тестовую инфраструктуру без подтверждения.
-- `commit-assistant` не читает исходники напрямую и не коммитит без явного подтверждения.
+- `git-assistant` не читает исходники напрямую, не коммитит, не пушит и не создает Bitbucket MR без явного подтверждения.
 - Skills подключены через allowlist для конкретных агентов, а не включены глобально.
 
 ## Заметки По Версии 0.1
@@ -98,7 +98,7 @@ cp -r skills/* .opencode/skills/
 Текущие ограничения:
 
 - `test-writer` не добавляет новый тестовый стек, если его нет в проекте.
-- `commit-assistant` намеренно использует только git diff/status/log context.
+- `git-assistant` намеренно использует только git diff/status/branch/remote/log context и Bitbucket MCP для MR.
 - `reviewer` сообщает о рисках, но не исправляет их.
 - Агенты ожидают, что supporting subagents установлены под теми же именами.
 
