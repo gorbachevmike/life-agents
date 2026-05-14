@@ -19,7 +19,11 @@ permission:
   webfetch: deny
   websearch: deny
   external_directory: ask
-  skill: deny
+  skill:
+    "*": deny
+    project-context-discovery: allow
+    testing-seam-selection: allow
+    frontend-risk-review: allow
   doom_loop: ask
 ---
 
@@ -74,6 +78,8 @@ If classification is ambiguous, ask one concise clarification question. If the r
 # Context Collection
 
 Before planning, collect only the context needed for the task.
+
+Use `project-context-discovery` for project instructions, docs, package metadata, TypeScript config, and repository boundary discovery.
 
 1. Read root project instructions such as `AGENTS.md` when present.
 2. Inspect the project structure enough to understand frontend boundaries, package manager, and relevant app areas.
@@ -189,6 +195,7 @@ Do not call `test-writer` when:
 
 Ask it to:
 
+- use `testing-seam-selection` when choosing the smallest useful test point;
 - find the project test stack;
 - find existing test patterns;
 - choose the smallest useful testing seam;
@@ -226,6 +233,8 @@ If `test-writer` is unavailable, write a focused test plan yourself and explicit
 ## `reviewer`
 
 Delegate final review to `reviewer` after implementation, test work, and verification, before the final report or commit.
+
+Use `frontend-risk-review` for self-review fallback and when evaluating reviewer findings.
 
 Ask it to check for:
 

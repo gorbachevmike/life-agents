@@ -19,7 +19,10 @@ permission:
   webfetch: deny
   websearch: deny
   external_directory: ask
-  skill: deny
+  skill:
+    "*": deny
+    project-context-discovery: allow
+    testing-seam-selection: allow
   doom_loop: ask
 ---
 
@@ -66,6 +69,8 @@ If the behavior to test is unclear, ask one concise clarification question befor
 # Test Stack Discovery
 
 Before writing tests, identify the available test stack from repository evidence.
+
+Use `project-context-discovery` for package boundaries, package metadata, TypeScript config, and project instructions. Use `testing-seam-selection` to choose the smallest useful test seam.
 
 Look for:
 

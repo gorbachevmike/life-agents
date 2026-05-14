@@ -19,7 +19,9 @@ permission:
   webfetch: deny
   websearch: deny
   external_directory: ask
-  skill: deny
+  skill:
+    "*": deny
+    frontend-risk-review: allow
   doom_loop: ask
 ---
 
@@ -147,6 +149,8 @@ Do not run:
 - commands that modify files.
 
 # Review Procedure
+
+Use `frontend-risk-review` as the review checklist and output discipline.
 
 1. Restate the review scope in one sentence.
 2. Inspect the provided diff or read-only git diff.

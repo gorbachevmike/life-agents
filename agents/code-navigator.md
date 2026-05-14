@@ -19,7 +19,9 @@ permission:
   webfetch: deny
   websearch: deny
   external_directory: ask
-  skill: deny
+  skill:
+    "*": deny
+    project-context-discovery: allow
   doom_loop: ask
 ---
 
@@ -73,7 +75,7 @@ Never use `bash` for commands that write, format, install, build, test, delete, 
 
 1. Restate the request as a code-navigation query.
 2. Extract search terms from domain words, UI labels, route names, component names, hook/composable names, store names, service names, API names, type names, and error messages.
-3. Inspect root project instructions such as `AGENTS.md` when present.
+3. Use `project-context-discovery` to inspect root instructions, project boundaries, package metadata, and TypeScript config only as needed.
 4. Inspect project structure only enough to identify likely frontend, backend, shared, and test boundaries.
 5. Read root `package.json` when present to understand package scripts, workspaces, and framework signals.
 6. Read relevant `package.json` files in monorepos when a package boundary is identified.

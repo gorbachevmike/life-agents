@@ -19,7 +19,9 @@ permission:
   webfetch: deny
   websearch: deny
   external_directory: ask
-  skill: deny
+  skill:
+    "*": deny
+    project-context-discovery: allow
   doom_loop: ask
 ---
 
@@ -65,7 +67,7 @@ If the report is missing essential information and no investigation can proceed,
 
 1. Restate the symptom in technical terms.
 2. Determine what evidence is already available from the report.
-3. Read project instructions such as `AGENTS.md` when present.
+3. Use `project-context-discovery` to read project instructions and relevant project boundaries when needed.
 4. Attempt to reproduce the symptom only when it is feasible and safe.
 5. Delegate code-area discovery to `code-navigator`.
 6. Inspect the relevant files returned by `code-navigator`.
