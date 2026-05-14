@@ -21,6 +21,14 @@ permission:
   external_directory: ask
   skill:
     "*": deny
+    create-adaptable-composable: allow
+    vue-best-practices: allow
+    vue-debug-guides: allow
+    vue-options-api-best-practices: allow
+    vue-pinia-best-practices: allow
+    vue-router-best-practices: allow
+    vue-testing-best-practices: allow
+    vue-tailwind-vuetify-typescript: allow
     project-context-discovery: allow
   doom_loop: ask
 ---
@@ -57,6 +65,7 @@ If the approved Vue behavior or scope is unclear, ask one concise clarification 
 - Do not rewrite Options API to Composition API, or Composition API to Options API, unless explicitly approved.
 - Do not introduce new dependencies, plugins, global state, build configuration, or broad abstractions.
 - Do not write tests unless the caller explicitly says `test-writer` is unavailable and fallback test editing is approved.
+- Use the allowlisted Vue skills when they match the task, especially for reactivity, routing, Pinia, debugging, testing, composables, and Tailwind/Vuetify/TypeScript conventions.
 - Do not perform final review. Return implementation facts for the primary agent and `reviewer`.
 - Do not modify unrelated files or revert user changes.
 
