@@ -45,6 +45,124 @@ cp agents/*.md .opencode/agents/
 cp -r skills/* .opencode/skills/
 ```
 
+## Как Сформировать AGENTS.md
+
+`AGENTS.md` должен давать агентам проверяемые правила проекта: где находится код, какие команды запускать, какие границы нельзя нарушать и какие проверки считать обязательными.
+
+Для монорепозитория лучше использовать два уровня инструкций:
+
+- Корневой `AGENTS.md` описывает правила всего репозитория, workspace layout, пакетный менеджер, общие команды и запреты.
+- Package-level `AGENTS.md` внутри приложения или пакета описывает локальный стек, команды, тесты, архитектурные границы и особенности конкретной части монорепозитория.
+
+Корневой `AGENTS.md` должен быть коротким и не дублировать детали всех пакетов. Его цель - помочь агенту быстро понять границы монорепозитория и выбрать правильный package-level контекст.
+
+Рекомендуемый корневой шаблон:
+
+```markdown
+# AGENTS.md
+
+## Repository
+
+- Type: monorepo
+- Package manager: pnpm / npm / yarn / bun
+- Workspace config: `pnpm-workspace.yaml` / `package.json#workspaces` / другое
+- Node version: `<version or source, например .nvmrc>`
+
+## Package Map
+
+- `apps/web`: frontend app, Vue / React / Next / Vite
+- `apps/desktop`: Electron app, main/preload/renderer
+- `packages/ui`: shared UI components
+- `packages/shared`: shared types and utilities
+- `packages/api`: API client or backend package
+
+## Global Rules
+
+- Do not run install commands unless explicitly approved.
+- Do not change lock files, workspace config, build config, generated files, or dependency versions unless explicitly approved.
+- Do not cross package boundaries by importing private files from another package.
+- Prefer existing package scripts over ad-hoc commands.
+- Preserve public exports, shared types, API contracts, IPC contracts, route contracts, and package boundaries.
+
+## Context Rules
+
+- Start with this file, then read the nearest package-level `AGENTS.md` for the touched package.
+- If multiple packages are affected, identify each package and its local instructions before planning.
+- If package-level instructions conflict with this file, stop and report the conflict.
+
+## Verification
+
+- Root typecheck: `<command or not available>`
+- Root lint: `<command or not available>`
+- Root tests: `<command or not available>`
+- Prefer package-level focused commands for normal feature and bugfix work.
+
+## Required Delegation
+
+- Frontend implementation starts through `frontend-dev-assistant`.
+- Vue implementation should be delegated to `vue-frontend-engineer`.
+- Electron implementation should be delegated to `electron-engineer`.
+- Behavior-changing work should delegate tests to `test-writer`.
+- Final risk review should be delegated to `reviewer`.
+```
+
+Package-level `AGENTS.md` кладите в директорию конкретного приложения или пакета, например `apps/web/AGENTS.md`, `apps/desktop/AGENTS.md`, `packages/ui/AGENTS.md`.
+
+Рекомендуемый package-level шаблон:
+
+```markdown
+# AGENTS.md
+
+## Package
+
+- Name: `apps/web`
+- Type: frontend app / Electron app / shared library / API package
+- Framework: Vue / React / Electron / Vite / Next / другое
+- Source root: `src/`
+- Public entrypoints: `src/index.ts`, `src/main.ts`, `src/preload.ts`, routes, exports
+
+## Local Architecture
+
+- Components: `<paths>`
+- Routes/pages: `<paths>`
+- Stores/state: `<paths>`
+- Services/API clients: `<paths>`
+- Shared types/contracts: `<paths>`
+- Tests: `<paths>`
+
+## Local Rules
+
+- Follow existing component, composable, store, service, route, and test patterns.
+- Do not import from another package's private `src/` files. Use public package exports.
+- Do not change public exports, props, events, routes, schemas, IPC channels, or shared types without calling it out in the plan.
+- Keep changes inside this package unless the approved plan names another package.
+
+## Commands
+
+- Typecheck: `<package-level command>`
+- Lint: `<package-level command>`
+- Unit tests: `<package-level command>`
+- Focused test: `<example focused command>`
+- Build: `<package-level command or not available>`
+
+## Testing Guidance
+
+- Test stack: Vitest / Jest / Playwright / Cypress / другое
+- Test setup: `<setup file or not available>`
+- Prefer the smallest behavior test near the changed unit.
+- Do not add testing dependencies or new infrastructure without explicit approval.
+
+## Technology Notes
+
+- Vue: describe Composition API, Pinia/Vuex, Router, UI library, form validation, and styling conventions.
+- Electron: describe main/preload/renderer layout, IPC naming, exposed preload APIs, security constraints, and manual runtime checks.
+- React: describe routing, state, data fetching, styling, and compiler/memoization conventions.
+```
+
+При заполнении шаблонов используйте конкретные команды из `package.json`, реальные пути и реальные границы пакетов. Не добавляйте желаемые правила, которых проект фактически не соблюдает, иначе агенты будут строить планы на ложном контексте.
+
+Для больших монорепозиториев полезно добавить отдельный `AGENTS.md` только в те пакеты, где агенты реально должны работать. Если файла в пакете нет, агент будет опираться на корневые инструкции, `package.json`, docs и найденные локальные паттерны.
+
 ## Рекомендуемый Workflow
 
 Для обычной frontend-разработки используйте `frontend-dev-assistant`:
