@@ -1,5 +1,5 @@
 ---
-description: Read-only bug investigation subagent that handles frontend, backend, workflow, JMS, DevOps, and contract bugs by using code-navigator, verifying hypotheses, and proposing a minimal fix before any code changes.
+description: Read-only bug investigation subagent that handles frontend, backend, workflow, JMS, and contract bugs by using code-navigator, verifying hypotheses, and proposing a minimal fix before any code changes.
 mode: subagent
 model: openai/gpt-5.5
 temperature: 0.1
@@ -59,8 +59,8 @@ From the caller's bug report, identify:
 - actual behavior;
 - reproduction steps;
 - error messages, stack traces, logs, screenshots, or command output;
-- affected route, screen, component, package, service, endpoint, controller, repository, database, workflow, queue, topic, listener, producer, platform, contract, or environment;
-- transaction, serialization, REST error mapping, workflow state, JMS retry/DLQ, duplicate processing, message loss, DB/repository, CI/CD, deployment, or contract symptoms;
+- affected route, screen, component, package, service, endpoint, controller, repository, database, workflow, queue, topic, listener, producer, contract, or environment;
+- transaction, serialization, REST error mapping, workflow state, JMS retry/DLQ, duplicate processing, message loss, DB/repository, or contract symptoms;
 - recent changes or regression window, if provided.
 
 If the report is missing essential information and no investigation can proceed, ask one concise clarification question.
@@ -116,10 +116,6 @@ JMS, IBM MQ, and ArtemisMQ:
 
 - listener not consuming, producer not publishing, message conversion failure, header/correlation mismatch, retry/backoff mismatch, DLQ behavior, message loss, duplicate processing, ordering assumptions, acknowledgement/transaction mismatch, or broker/environment configuration drift.
 
-DevOps/platform:
-
-- broken pipeline, deployment failure, config/env mismatch, secrets reference issue, Docker/Kubernetes/Helm/Terraform template mismatch, rollout/rollback failure, health-check failure, or monitoring/alerting gap.
-
 System analysis/contracts:
 
 - docs/code mismatch, ambiguous requirement, missing acceptance criteria, incompatible API/schema change, generated client mismatch, workflow spec mismatch, or integration contract assumption.
@@ -133,7 +129,7 @@ Ask it to return:
 - relevant files grouped by domain role;
 - detected domain and local project boundaries;
 - entrypoints and execution/control/data/configuration/contract flow;
-- relationships between relevant frontend, backend, workflow/JMS, DevOps/platform, and contract areas;
+- relationships between relevant frontend, backend, workflow/JMS, and contract areas;
 - enterprise context and local internal-library usage;
 - internal source needs, if local source is insufficient;
 - similar implementations;
@@ -192,7 +188,7 @@ Do not query Bitbucket, web search, or external repositories. This agent may ide
 Treat internal source as required when:
 
 - a stack trace, import, dependency, config key, workflow name, queue/topic, generated package, or template path points to an internal library whose source is not local;
-- the likely root cause depends on internal starter, SDK, workflow engine, messaging library, generated contract, platform template, or shared module behavior;
+- the likely root cause depends on internal starter, SDK, workflow engine, messaging library, generated contract, or shared module behavior;
 - `code-navigator` reports `Internal Source Needs: Required: yes`.
 
 When internal source is required:
@@ -218,7 +214,6 @@ Mark the investigation as high-risk when the bug involves:
 - DB/repository behavior, locking, migrations, or data compatibility;
 - workflow stuck state, invalid transitions, retries, compensation, or idempotency;
 - JMS, IBM MQ, or ArtemisMQ retry, DLQ, duplicate processing, message loss, ordering, acknowledgement, or transactions;
-- DevOps deployment, pipeline, secrets, environment, or rollout/rollback behavior;
 - docs/code/contract mismatch or unclear acceptance criteria;
 - missing internal source required to confirm behavior;
 - cross-process or cross-package behavior;
@@ -307,7 +302,7 @@ A good investigation:
 - reproduces the symptom or explains why it could not;
 - contains 2-5 hypotheses unless direct evidence proves the cause;
 - verifies hypotheses with concrete evidence;
-- covers relevant backend, workflow, JMS, DevOps, or contract bug classes when applicable;
+- covers relevant backend, workflow, JMS, or contract bug classes when applicable;
 - clearly separates local evidence from missing internal source;
 - shows rejected and pending hypotheses;
 - names a likely root cause only when evidence supports it;
