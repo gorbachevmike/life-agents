@@ -45,6 +45,44 @@ cp agents/*.md .opencode/agents/
 cp -r skills/* .opencode/skills/
 ```
 
+## Генерация AGENTS.md
+
+В каждом рабочем проекте рекомендуется создать project-local `AGENTS.md`. Этот файл должен описывать правила проекта, команды проверки, границы модулей и внутренние enterprise-конвенции, чтобы агенты не угадывали контекст.
+
+Запустите OpenCode из корня целевого проекта и используйте такой запрос:
+
+```text
+Сгенерируй AGENTS.md для этого проекта.
+
+Сначала изучи только локальный контекст: README, docs, build/package metadata, структуру модулей, доступные test/build/lint команды, frontend/backend/shared/generated границы, workflow/JMS/contract конфигурацию и существующие правила разработки.
+
+Не меняй код. Не запускай install, build, tests, migrations или destructive commands без отдельного подтверждения.
+
+Подготовь AGENTS.md с разделами:
+- Project Overview
+- Repository Structure
+- Module Boundaries
+- Build And Verification Commands
+- Coding Conventions
+- Testing Conventions
+- Generated Files And Contracts
+- Internal Libraries And Starters
+- Workflow/JMS Notes
+- Bitbucket Repository Map, если есть точные соответствия dependency/package -> project/repo
+- Safety Rules
+
+Не добавляй секреты, токены, приватные URL с credentials или локальные machine-specific paths.
+Перед записью файла покажи план и дождись подтверждения.
+```
+
+После генерации проверьте, что `AGENTS.md` содержит:
+
+- точные команды для проверки проекта;
+- правила, какие файлы нельзя менять без подтверждения;
+- описание generated/contract/shared модулей;
+- внутренние библиотеки, starters и workflow/JMS особенности;
+- mapping для Bitbucket MCP только там, где он точно известен.
+
 ## Рекомендуемый Workflow
 
 Для Java/backend-разработки используйте `java-dev-assistant`:
