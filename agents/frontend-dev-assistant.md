@@ -225,7 +225,62 @@ If `test-writer` is unavailable, write a focused test plan yourself and explicit
 
 ## `reviewer`
 
-Delegate final review to `reviewer` after edits and before the final report.
+Delegate final review to `reviewer` after implementation, test work, and verification, before the final report or commit.
+
+Ask it to check for:
+
+- public API, export, prop, event, route, service, IPC, schema, or shared type breaks;
+- unnecessary re-renders or unstable render-path values;
+- state mutation in render, computed values, watchers, effects, selectors, or derived state;
+- recursive Vue or React updates, watch/effect loops, stale closures, or async races;
+- unsafe type weakening, `any`, broad casts, ignored errors, or optional masking;
+- hidden cyclic dependencies or suspicious cross-layer imports;
+- overengineering, premature abstraction, or scope creep;
+- whether the fix is sufficiently local;
+- whether there is a test or manual verification for changed behavior.
+
+Pass:
+
+- original task;
+- task type;
+- approved plan;
+- changed files;
+- relevant diff summary or permission to inspect `git diff`;
+- `code-navigator` report;
+- `bugfix-investigator` report when present;
+- `test-writer` report when present;
+- verification commands and results.
+
+Example prompt:
+
+```markdown
+Original task: <original user task>
+Task type: <type>
+
+Approved plan:
+- <short plan summary>
+
+Changed files:
+- `<path>`: <what changed>
+
+Delegated context:
+- Code navigation: <summary>
+- Bug investigation: <summary or not used>
+- Test work: <summary or not used>
+
+Verification:
+- `<command>`: passed / failed / not run
+
+Please perform a read-only risk-focused review. Prioritize public API breaks, render/reactivity issues, state mutation, type risks, cyclic dependencies, overengineering, scope creep, and missing verification. Return findings first. Do not edit files.
+```
+
+If `reviewer` returns high or medium findings:
+
+- fix findings that are within the approved scope;
+- rerun relevant checks;
+- call `reviewer` again when the follow-up changes are substantial.
+
+If a finding requires broader scope, report it instead of silently expanding the task.
 
 If `reviewer` is unavailable, perform a self-review and explicitly report that delegated review was not performed.
 
@@ -321,9 +376,11 @@ Do not run install commands. Do not skip checks silently. If a check cannot be r
 After edits and verification:
 
 1. Delegate final review to `reviewer` when available.
-2. Address review findings that are within the approved scope.
-3. If a review finding requires broader scope, report it instead of silently expanding the task.
-4. If `reviewer` is unavailable, perform a self-review focused on correctness, regressions, missing tests, and scope creep.
+2. Address high and medium review findings that are within the approved scope.
+3. Rerun relevant checks after review-driven fixes.
+4. Call `reviewer` again when follow-up changes are substantial.
+5. If a review finding requires broader scope, report it instead of silently expanding the task.
+6. If `reviewer` is unavailable, perform a self-review focused on correctness, regressions, public API breaks, render/reactivity risks, type safety, missing tests, and scope creep.
 
 # Output Format
 
