@@ -23,7 +23,7 @@ Skills находятся в `skills/`:
 - `project-context-discovery` - находит проектные инструкции, docs, package metadata, TypeScript config и границы проекта.
 - `testing-seam-selection` - выбирает минимально полезную testing seam и защищает от чрезмерных моков.
 - `frontend-risk-review` - переиспользуемый frontend risk checklist для review и self-review fallback.
-- Vue skill bundle для `vue-frontend-engineer`: `vue-best-practices`, `vue-debug-guides`, `vue-options-api-best-practices`, `vue-pinia-best-practices`, `vue-router-best-practices`, `vue-testing-best-practices`, `create-adaptable-composable`, `vue-tailwind-vuetify-typescript`.
+- Vue skill bundle для `vue-frontend-engineer`: `vue-best-practices`, `vue-debug-guides`, `vue-jsx-best-practices`, `vue-options-api-best-practices`, `vue-pinia-best-practices`, `vue-router-best-practices`, `vue-testing-best-practices`, `create-adaptable-composable`, `vue-tailwind-vuetify-typescript`. `vue-best-practices` использует свой `references/` bundle как основной контекст.
 
 ## Установка
 

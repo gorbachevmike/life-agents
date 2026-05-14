@@ -1,21 +1,23 @@
 ---
 name: vue-router-best-practices
-description: Vue Router guidance for navigation guards, params, cleanup, and route-component lifecycle interactions.
+description: "Vue Router 4 patterns, navigation guards, route params, and route-component lifecycle interactions."
+version: 1.0.0
+license: MIT
+author: github.com/vuejs-ai
 ---
 
-# Vue Router Best Practices
+Vue Router best practices, common gotchas, and navigation patterns.
 
-Use this skill for Vue Router routes, guards, and navigation behavior.
+### Navigation Guards
+- Navigating between same route with different params → See [router-beforeenter-no-param-trigger](reference/router-beforeenter-no-param-trigger.md)
+- Accessing component instance in beforeRouteEnter guard → See [router-beforerouteenter-no-this](reference/router-beforerouteenter-no-this.md)
+- Navigation guard making API calls without awaiting → See [router-guard-async-await-pattern](reference/router-guard-async-await-pattern.md)
+- Users trapped in infinite redirect loops → See [router-navigation-guard-infinite-loop](reference/router-navigation-guard-infinite-loop.md)
+- Navigation guard using deprecated next() function → See [router-navigation-guard-next-deprecated](reference/router-navigation-guard-next-deprecated.md)
 
-## Rules
+### Route Lifecycle
+- Stale data when navigating between same route → See [router-param-change-no-lifecycle](reference/router-param-change-no-lifecycle.md)
+- Event listeners persisting after component unmounts → See [router-simple-routing-cleanup](reference/router-simple-routing-cleanup.md)
 
-- Keep route contracts explicit: params, query, names, and guards.
-- Use the simplest guard or route hook that matches the behavior.
-- Clean up side effects when route components unmount or change.
-- Avoid infinite redirect loops and stale route data.
-
-## Debugging
-
-- Check whether same-route navigation reuses a component instance.
-- Verify param/query updates on route changes.
-- Ensure route guards await async work before deciding navigation.
+### Setup
+- Building production single-page application → See [router-use-vue-router-for-production](reference/router-use-vue-router-for-production.md)

@@ -1,22 +1,21 @@
 ---
 name: vue-pinia-best-practices
-description: Pinia guidance for Vue stores, state ownership, reactivity, SSR, and store contract safety.
+description: "Pinia stores, state management patterns, store setup, and reactivity with stores."
+version: 1.0.0
+license: MIT
+author: github.com/vuejs-ai
 ---
 
-# Vue Pinia Best Practices
+Pinia best practices, common gotchas, and state management patterns.
 
-Use this skill for Pinia stores and Vue state management.
+### Store Setup
+- Getting "getActivePinia was called" error at startup → See [pinia-no-active-pinia-error](reference/pinia-no-active-pinia-error.md)
+- Setup stores missing state in DevTools or SSR → See [pinia-setup-store-return-all-state](reference/pinia-setup-store-return-all-state.md)
 
-## Rules
+### Reactivity
+- Store destructuring stops updating UI reactively → See [pinia-store-destructuring-breaks-reactivity](reference/pinia-store-destructuring-breaks-reactivity.md)
+- Store methods lose context in template calls → See [store-method-binding-parentheses](reference/store-method-binding-parentheses.md)
 
-- Keep a single source of truth in the store and derive view state with getters/computed values.
-- Avoid destructuring that breaks reactivity; keep store usage reactive.
-- Preserve action names and state contracts unless the plan explicitly changes them.
-- Keep stores small and feature-focused.
-- Be careful with SSR and store initialization.
-
-## Debugging
-
-- Check active Pinia setup and store injection.
-- Verify that destructured values still update.
-- Ensure store methods keep the correct context.
+### State Patterns
+- Filters reset on refresh or can't be shared → See [state-url-for-ephemeral-filters](reference/state-url-for-ephemeral-filters.md)
+- Building production app without DevTools or conventions → See [state-use-pinia-for-large-apps](reference/state-use-pinia-for-large-apps.md)

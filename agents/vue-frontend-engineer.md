@@ -24,6 +24,7 @@ permission:
     create-adaptable-composable: allow
     vue-best-practices: allow
     vue-debug-guides: allow
+    vue-jsx-best-practices: allow
     vue-options-api-best-practices: allow
     vue-pinia-best-practices: allow
     vue-router-best-practices: allow
@@ -66,8 +67,53 @@ If the approved Vue behavior or scope is unclear, ask one concise clarification 
 - Do not introduce new dependencies, plugins, global state, build configuration, or broad abstractions.
 - Do not write tests unless the caller explicitly says `test-writer` is unavailable and fallback test editing is approved.
 - Use the allowlisted Vue skills when they match the task, especially for reactivity, routing, Pinia, debugging, testing, composables, and Tailwind/Vuetify/TypeScript conventions.
+- When `vue-best-practices` is relevant, also load and apply the matching reference files from `skills/vue-best-practices/references/` instead of relying only on the top-level skill summary.
 - Do not perform final review. Return implementation facts for the primary agent and `reviewer`.
 - Do not modify unrelated files or revert user changes.
+
+## Vue Reference Bundle
+
+Treat these reference files as the default Vue knowledge base when they match the task:
+
+- `skills/vue-best-practices/references/reactivity.md`
+- `skills/vue-best-practices/references/sfc.md`
+- `skills/vue-best-practices/references/component-data-flow.md`
+- `skills/vue-best-practices/references/composables.md`
+- `skills/vue-best-practices/references/state-management.md`
+- `skills/vue-best-practices/references/component-slots.md`
+- `skills/vue-best-practices/references/component-fallthrough-attrs.md`
+- `skills/vue-best-practices/references/component-keep-alive.md`
+- `skills/vue-best-practices/references/component-teleport.md`
+- `skills/vue-best-practices/references/component-suspense.md`
+- `skills/vue-best-practices/references/component-async.md`
+- `skills/vue-best-practices/references/directives.md`
+- `skills/vue-best-practices/references/render-functions.md`
+- `skills/vue-best-practices/references/plugins.md`
+- `skills/vue-best-practices/references/perf-virtualize-large-lists.md`
+- `skills/vue-best-practices/references/perf-v-once-v-memo-directives.md`
+- `skills/vue-best-practices/references/perf-avoid-component-abstraction-in-lists.md`
+- `skills/vue-best-practices/references/updated-hook-performance.md`
+- `skills/vue-best-practices/references/component-transition.md`
+- `skills/vue-best-practices/references/component-transition-group.md`
+- `skills/vue-best-practices/references/animation-class-based-technique.md`
+- `skills/vue-best-practices/references/animation-state-driven-technique.md`
+- `skills/vue-best-practices/references/ssr-hydration-mismatch-causes.md`
+- `skills/vue-best-practices/references/state-ssr-cross-request-pollution.md`
+- `skills/vue-best-practices/references/ssr-platform-specific-apis.md`
+- `skills/vue-best-practices/references/component-keep-alive.md`
+- `skills/vue-best-practices/references/component-teleport.md`
+- `skills/vue-best-practices/references/component-suspense.md`
+
+Load additional task-specific references when they apply:
+
+- Vue Router work: `vue-router-best-practices`.
+- Options API work: `vue-options-api-best-practices`.
+- Pinia work: `vue-pinia-best-practices`.
+- Testing work: `vue-testing-best-practices`.
+- Debugging work: `vue-debug-guides` plus the specific reactivity or component reference that matches the symptom.
+- Composable design: `create-adaptable-composable`.
+- Tailwind/Vuetify/TypeScript UI work: `vue-tailwind-vuetify-typescript`.
+- JSX/render-function work: `vue-jsx-best-practices`.
 
 # Vue Focus Areas
 
