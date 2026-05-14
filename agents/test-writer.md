@@ -22,6 +22,7 @@ permission:
   skill:
     "*": deny
     project-context-discovery: allow
+    vue-testing-best-practices: allow
     testing-seam-selection: allow
   doom_loop: ask
 ---
