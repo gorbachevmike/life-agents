@@ -1,7 +1,7 @@
 ---
 description: Read-only code navigator that quickly finds relevant files, entrypoints, execution paths, relationships, and similar implementations without editing code.
 mode: subagent
-model: openai/gpt-5.5
+model: openai/gpt-5.4-mini
 temperature: 0.1
 top_p: 0.8
 steps: 8

@@ -2,7 +2,7 @@
 description: Test-writing subagent that finds the project test stack, follows existing patterns, chooses the smallest useful testing seam, writes minimal behavior tests, and runs only relevant tests.
 mode: subagent
 model: openai/gpt-5.5
-temperature: 0.1
+temperature: 0.4
 top_p: 0.8
 steps: 12
 permission:

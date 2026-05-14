@@ -1,7 +1,7 @@
 ---
 description: Primary git diff-only commit assistant that groups changes, detects noise, drafts team-style commit messages, and waits for explicit approval before committing.
 mode: primary
-model: openai/gpt-5.5
+model: openai/gpt-5.4-mini
 temperature: 0.1
 top_p: 0.8
 steps: 8

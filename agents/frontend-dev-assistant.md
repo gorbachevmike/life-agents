@@ -2,7 +2,7 @@
 description: Primary frontend development assistant that classifies tasks, gathers context, plans before editing, enforces subagent delegation gates, routes Vue/Electron/browser verification, runs checks, and reports results.
 mode: primary
 model: openai/gpt-5.5
-temperature: 0.1
+temperature: 0.4
 top_p: 0.8
 steps: 24
 permission:
