@@ -10,6 +10,7 @@
 
 - `frontend-dev-assistant` - основной агент для frontend-задач. Классифицирует задачу, собирает контекст, составляет план до правок, делегирует специализированным агентам, запускает проверки и возвращает отчет.
 - `code-navigator` - read-only subagent для навигации по коду. Находит релевантные файлы, точки входа, execution path, связи и похожие реализации.
+- `bitbucket-source-navigator` - read-only subagent для точечного поиска исходников внутренних библиотек и шаблонов через Bitbucket MCP по dependency/package/class/contract/template evidence.
 - `bugfix-investigator` - read-only subagent для расследования багов. Воспроизводит или анализирует симптом, строит гипотезы и предлагает минимальный фикс.
 - `test-writer` - subagent для тестов. Находит тестовый стек, выбирает минимально полезную testing seam, пишет behavior tests и запускает только релевантные тесты.
 - `reviewer` - read-only subagent для поиска рисков. Проверяет API breaks, render/state issues, type risks, циклические зависимости, overengineering и отсутствие проверок.
@@ -76,6 +77,7 @@ cp -r skills/* .opencode/skills/
 
 - Агенты, которые могут менять код, сначала требуют план.
 - `code-navigator`, `bugfix-investigator` и `reviewer` работают read-only.
+- `bitbucket-source-navigator` работает read-only, использует Bitbucket MCP только при наличии точного evidence и не делает широкий поиск по репозиториям.
 - `test-writer` может менять тесты, но не добавляет зависимости и тестовую инфраструктуру без подтверждения.
 - `commit-assistant` не читает исходники напрямую и не коммитит без явного подтверждения.
 - Skills подключены через allowlist для конкретных агентов, а не включены глобально.
